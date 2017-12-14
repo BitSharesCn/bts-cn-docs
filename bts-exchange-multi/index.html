@@ -70,6 +70,39 @@
     <a class="current" href="./">双节点版</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#bts">BTS 交易所对接指南（双节点版）</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#1">1. 基本概念</a></li>
+        
+            <li><a class="toctree-l4" href="#2">2. 基础软硬件需求</a></li>
+        
+            <li><a class="toctree-l4" href="#3">3. 程序准备</a></li>
+        
+            <li><a class="toctree-l4" href="#4">4. 环境准备</a></li>
+        
+            <li><a class="toctree-l4" href="#5">5. 同步数据</a></li>
+        
+            <li><a class="toctree-l4" href="#6">6. 账户设置</a></li>
+        
+            <li><a class="toctree-l4" href="#7">7. 钱包命令</a></li>
+        
+            <li><a class="toctree-l4" href="#8-api">8. 钱包 API</a></li>
+        
+            <li><a class="toctree-l4" href="#9">9. 处理充值</a></li>
+        
+            <li><a class="toctree-l4" href="#10">10. 处理提现</a></li>
+        
+            <li><a class="toctree-l4" href="#11_1">11. 其他</a></li>
+        
+            <li><a class="toctree-l4" href="#12_1">12. 相关资料</a></li>
+        
+            <li><a class="toctree-l4" href="#_1">修改记录：</a></li>
+        
+        </ul>
+    
+
     </ul>
                 </li>
     </ul>
@@ -114,16 +147,16 @@
           <div role="main">
             <div class="section">
               
-                <p>BTS 交易所对接指南（双节点版）</p>
+                <h1 id="bts">BTS 交易所对接指南（双节点版）<a class="headerlink" href="#bts" title="Permanent link">&para;</a></h1>
 <p>此文目的是协助第三方交易所上线 BTS 交易。</p>
 <p>此文所述方案为双节点方案。另有单节点方案，可以节省内存、硬盘和同步时间，详见另一篇文档。</p>
-<ol>
-<li>基本概念</li>
-</ol>
-<p>1.1 共识</p>
+<h2 id="1">1. 基本概念<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h3 id="11">1.1 共识<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
 <p>BTS 使用 DPOS 共识机制，由持有 BTS 的人投票产生区块锻造人，标准区块间隔时间是 3 秒。</p>
-<p>1.2 账户</p>
-<p>1) BTS里，资金是存在账户里的，不像比特币是存在地址里。对交易所来说，需要公开一个账号供用户充值。
+<h3 id="12">1.2 账户<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>BTS里，资金是存在账户里的，不像比特币是存在地址里。对交易所来说，需要公开一个账号供用户充值。
    可以使用网页钱包或者轻钱包注册新账号。
    注意：对于交易所来说，注册账号请使用钱包模式，而不是账户模式，因为交易所要用到一些高级功能，在账户模式下会存在问题。
         （如果是官方网页钱包或轻钱包 171102 或以上版本，第一次注册时默认是账户模式，可点击“高级”进入钱包模式）。
@@ -133,42 +166,56 @@
        可以到区块链浏览器 https://cryptofresh.com/ 输入账号名获取账户 ID ，
        也可以自建节点同步完成后在钱包里通过命令获取 ID ，获取命令参考“提现目的账号名检查”章节。
    为了资金安全，交易所可以用一个账号负责充值，另用一个账号负责提现。</p>
-<p>2) 用户充值，就是从其他账号转账到交易所的公开的账号。
+</li>
+<li>
+<p>用户充值，就是从其他账号转账到交易所的公开的账号。
    账号名就是收款地址。
    每笔转账可以带一个备注，交易所通过这个备注来区分是哪个用户的充值。
    具体备注与交易所用户关联关系，请交易所自行设定。
    备注是加密的，只有拥有发送者或者接收者的备注密钥才可以解密。</p>
-<p>3) 用户提现，就是从交易所账号转账到用户账号，目的账号名由用户提供。
+</li>
+<li>
+<p>用户提现，就是从交易所账号转账到用户账号，目的账号名由用户提供。
    由于有用户需要把资金直接从一个交易所转到另一个交易所，而另一个交易所是根据备注入账，所以提现功能最好可以带备注。</p>
-<p>4) 使用网页钱包注册的账号是基本账号。可付费升级为终身会员账号，升级后，后续交易手续费节省 80% 。
+</li>
+<li>
+<p>使用网页钱包注册的账号是基本账号。可付费升级为终身会员账号，升级后，后续交易手续费节省 80% 。
    终身会员可以创建新账号。
    当前手续费费率标准可以在钱包内查看，从界面依次点击 浏览-费率表 进入。</p>
-<p>5) 每个账号默认有3对密钥，可以在账户-高级设定-权限页面里查看，分别为：活跃权限、账户权限、备注密钥。
+</li>
+<li>
+<p>每个账号默认有3对密钥，可以在账户-高级设定-权限页面里查看，分别为：活跃权限、账户权限、备注密钥。
    其中，活跃权限密钥用于转账等日常操作；账户权限密钥用于修改密钥；备注密钥用来加密和解密转账备注。
    默认情况下，活跃权限密钥与备注密钥相同，但可以修改为不同。</p>
-<p>1.3 资产</p>
-<p>1) BTS 系统里有多种资产，其中，核心资产是 BTS 。交易所上线 BTS 系统内其他资产的方法，与上线核心资产（BTS）的方式类似。</p>
-<p>2) 每个账户可以同时拥有多种资产。 </p>
-<p>1.4 块链结构</p>
-<p>每个块有个 ID，即 block_id，该 ID 是块内容的 hash 值；
-每个块包含前一块的 ID，存放在 &ldquo;previous&rdquo; 字段，因此形成一个链；
-每个块里包含多个交易，存放在 &ldquo;transactions&rdquo; 字段，按顺序存放；
-  使用 API 获取块信息时，会同时返回 &ldquo;transaction_ids&rdquo; 字段，即交易 ID 清单，是交易（不包含签名）序列化后的 hash 值
-每个交易可包含多个操作，存放在 &ldquo;operations&rdquo; 字段，按顺序存放；
-  每个操作也有一个 ID ，是一个全局数字编号，是程序运行中内部产生的，不是 hash 值</p>
-<ol>
-<li>基础软硬件需求</li>
+</li>
 </ol>
-<p>独立服务器或者VPS
-8G 内存（更多更好）
-50G 硬盘</p>
-<p>安装 64 位 Ubuntu 16.04 LTS （推荐） ，或者 Ubuntu 14.04 LTS ，或者 Windows Server 。</p>
+<h3 id="13">1.3 资产<a class="headerlink" href="#13" title="Permanent link">&para;</a></h3>
 <ol>
-<li>程序准备</li>
+<li>
+<p>BTS 系统里有多种资产，其中，核心资产是 BTS 。交易所上线 BTS 系统内其他资产的方法，与上线核心资产（BTS）的方式类似。</p>
+</li>
+<li>
+<p>每个账户可以同时拥有多种资产。 </p>
+</li>
 </ol>
+<h3 id="14">1.4 块链结构<a class="headerlink" href="#14" title="Permanent link">&para;</a></h3>
+<p>每个块有个 ID，即 block_id，该 ID 是块内容的 hash 值；</p>
+<p>每个块包含前一块的 ID，存放在 &ldquo;previous&rdquo; 字段，因此形成一个链；</p>
+<p>每个块里包含多个交易，存放在 &ldquo;transactions&rdquo; 字段，按顺序存放；</p>
+<p>使用 API 获取块信息时，会同时返回 &ldquo;transaction_ids&rdquo; 字段，即交易 ID 清单，是交易（不包含签名）序列化后的 hash 值</p>
+<p>每个交易可包含多个操作，存放在 &ldquo;operations&rdquo; 字段，按顺序存放；</p>
+<p>每个操作也有一个 ID ，是一个全局数字编号，是程序运行中内部产生的，不是 hash 值</p>
+<h2 id="2">2. 基础软硬件需求<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>独立服务器或者VPS</li>
+<li>8G 内存（更多更好）</li>
+<li>50G 硬盘</li>
+<li>安装 64 位 Ubuntu 16.04 LTS （推荐） ，或者 Ubuntu 14.04 LTS ，或者 Windows Server 。</li>
+</ul>
+<h2 id="3">3. 程序准备<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <p>要对接 BTS 系统，需要运行这几个程序：普通节点 witness_node 、延迟节点 delayed_node 、命令行钱包 cli_wallet 。</p>
 <p>单节点方案不需要运行 delayed_node 。</p>
-<p>3.1 架构说明</p>
+<h3 id="31">3.1 架构说明<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
 <p>witness_node 通过 P2P 方式连接到 BTS 网络，从网络接收最新区块，向网络广播本地签署的交易包； 
 witness_node 通过 websocket + http rpc 的方式提供 API 供其他程序调用（以下称为节点 API）。</p>
 <p>delayed_node 通过 websocket 方式连接到 witness_node ，只包含不可回退的区块；
@@ -181,248 +228,329 @@ cli_wallet 提供交易签名功能，签名后通过 witness_node 向外广播�
 cli_wallet 通过 http rpc 的方式提供 API 供其他程序调用（以下称为钱包 API）。</p>
 <p>推荐交易所使用一个连接到 delayed_node 的 cli_wallet 来监测用户充值，使用另一个连接到 witness_node 的 cli_wallet 来处理用户提现请求。</p>
 <p>如果不使用 delayed_node ，则需要自行判断交易是否可以回退（以下会说明推荐的判断方法）。</p>
-<p>3.2 Windows</p>
+<h3 id="32-windows">3.2 Windows<a class="headerlink" href="#32-windows" title="Permanent link">&para;</a></h3>
 <p>Github 上提供编译好的 Windows 可执行文件下载，下载页面在 https://github.com/bitshares/bitshares-core/releases/latest ，
 文件为 BitShares-Core-2.0.xxxxxx-x64-cli-tools.zip ，解开即可，里面包含3个 exe 文件和两个 dll 文件。</p>
-<p>3.3 Linux</p>
+<h3 id="33-linux">3.3 Linux<a class="headerlink" href="#33-linux" title="Permanent link">&para;</a></h3>
 <p>如果使用 Linux 系统，需要自行编译几个上述程序。推荐使用 Ubuntu 16.04 LTS ，编译步骤如下：</p>
-<p>sudo apt-get update
-sudo apt-get install autoconf cmake git libboost-all-dev libssl-dev doxygen</p>
-<p>git clone https://github.com/bitshares/bitshares-core.git
+<pre><code>sudo apt-get update
+sudo apt-get install autoconf cmake git libboost-all-dev libssl-dev doxygen
+
+git clone https://github.com/bitshares/bitshares-core.git
 cd bitshares-core
-git checkout <LATEST_RELEASE_TAG>
-git submodule update &ndash;init &ndash;recursive
+git checkout &lt;LATEST_RELEASE_TAG&gt;
+git submodule update --init --recursive
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
-make witness_node delayed_node cli_wallet</p>
+make witness_node delayed_node cli_wallet
+</code></pre>
+
 <p>注：上述步骤中，请将 <LATEST_RELEASE_TAG> 替换成最新发布版本号，编写本文时，最新版本号是 2.0.170606</p>
 <p>编译完成后，3个程序分别是：
-<em> build/programs/witness_node/witness_node
-</em> build/programs/delayed_node/delayed_node
-* build/programs/cli_wallet/cli_wallet</p>
+- build/programs/witness_node/witness_node
+- build/programs/delayed_node/delayed_node
+- build/programs/cli_wallet/cli_wallet</p>
 <p>上述程序可以拷贝到其他目录或者其他服务器执行。以下默认认为程序在当前目录。</p>
 <p>如果使用 Ubuntu 14.04 LTS ，则需要先编译安装 Boost 库，然后再执行上述步骤。
 请注意，目前只支持 1.57.0 到 1.60.0 的 Boost 库。
 编译安装 Boost 库的步骤为：</p>
-<p>sudo apt-get install cmake make libbz2-dev libdb++-dev libdb-dev libssl-dev openssl libreadline-dev autoconf libtool git autotools-dev build-essential g++ libbz2-dev libicu-dev python-dev doxygen</p>
-<p>wget -c &lsquo;http://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.tar.bz2/download&rsquo; -O boost_1_57_0.tar.bz2
+<pre><code>sudo apt-get install cmake make libbz2-dev libdb++-dev libdb-dev libssl-dev openssl libreadline-dev autoconf libtool git autotools-dev build-essential g++ libbz2-dev libicu-dev python-dev doxygen
+
+wget -c 'http://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.tar.bz2/download' -O boost_1_57_0.tar.bz2
 tar xjf boost_1_57_0.tar.bz2
 cd boost_1_57_0
 ./bootstrap.sh
-sudo ./b2 install</p>
+sudo ./b2 install
+</code></pre>
+
 <p>使用其他 Linux 发行版也可以编译，不在本文说明范围。</p>
-<ol>
-<li>环境准备</li>
-</ol>
+<h2 id="4">4. 环境准备<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <p>要保证系统正常运行，需要保证服务器系统时间正确。时间不正确会导致块链无法同步、资金发送失败等各种问题。</p>
 <p>Ubuntu 系统推荐安装 NTP 服务端，方法是</p>
-<p>sudo apt-get install ntp</p>
+<pre><code>sudo apt-get install ntp
+</code></pre>
+
 <p>Windows 系统请设置好系统时间同步。</p>
-<ol>
-<li>同步数据</li>
-</ol>
+<h2 id="5">5. 同步数据<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
 <p>由于需要同时运行多个程序， Ubuntu 下推荐在 Screen 或者 tmux 里启动程序。</p>
 <p>以下描述主要针对 Ubuntu ，所以命令前都带 ./ 。对于 Windows ，在命令行界面 cd 到程序目录之后，执行时不需要 ./ 。</p>
-<p>5.1 witness_node</p>
+<h3 id="51-witness_node">5.1 witness_node<a class="headerlink" href="#51-witness_node" title="Permanent link">&para;</a></h3>
 <p>可使用 ./witness_node &ndash;help 来查看命令参数。</p>
-<p>5.1.1 初次执行：</p>
-<p>./witness_node -d witness_node_data_dir</p>
+<h4 id="511">5.1.1 初次执行：<a class="headerlink" href="#511" title="Permanent link">&para;</a></h4>
+<pre><code>./witness_node -d witness_node_data_dir
+</code></pre>
+
 <p>然后按 Ctrl+C 结束它。</p>
 <p>这样会在当前目录生成一个数据目录 witness_node_data_dir ，里面包含 blockchain 目录是数据存储，以及一个 config.ini 配置文件。</p>
 <p>对于交易所，推荐对 config.ini 配置文件作一些修改。</p>
-<p>1) 可关闭 p2p 日志，以减小硬盘存储压力，方法是找到 filename=logs/p2p/p2p.log 行，在行首添加 # 号
+<ol>
+<li>
+<p>可关闭 p2p 日志，以减小硬盘存储压力，方法是找到 filename=logs/p2p/p2p.log 行，在行首添加 # 号
    或者将 [logger.p2p] 下面的 level=info 修改为 level=error</p>
-<p>2) 可考虑将控制台日志同时保存到文件，方法是将下述章节</p>
-<p>[logger.default]
+</li>
+<li>
+<p>可考虑将控制台日志同时保存到文件，方法是将下述章节</p>
+</li>
+</ol>
+<pre><code>[logger.default]
 level=info
-appenders=stderr</p>
+appenders=stderr
+</code></pre>
+
 <p>修改为</p>
-<p>[log.file_appender.default]
-filename=logs/default/default.log</p>
-<p>[logger.default]
+<pre><code>[log.file_appender.default]
+filename=logs/default/default.log
+
+[logger.default]
 level=info
-appenders=stderr,default</p>
+appenders=stderr,default
+</code></pre>
+
 <p>这样之后， witness_node_data_dir/logs/default/ 目录下会同步保留最近24小时的控制台日志。</p>
-<p>3) 以下参数会减少运行需要的内存，原理是不保存内置交易引擎的历史成交记录索引。</p>
-<p>history-per-size = 0</p>
+<ol>
+<li>以下参数会减少运行需要的内存，原理是不保存内置交易引擎的历史成交记录索引。</li>
+</ol>
+<pre><code>history-per-size = 0
+</code></pre>
+
 <p>如果是 2.0.171105a 及以后版本，则需要设置这个参数：</p>
-<p>plugins = witness account_history</p>
+<pre><code>plugins = witness account_history
+</code></pre>
+
 <p>注：
-<em> config.ini 里默认 plugins 前有个“#”符号，需要删除；
-</em> 默认的 plugins 配置是 “witness account_history market_history”，这里实际是去掉“market_history”；
-* 如果 config.ini 里没找到该配置项，比如从老版本升级上来时不会更新已有配置文件，
-  * 可以在 config.ini 最前面添加一行（不要加在文件最后面），
-  * 也可以另外找个空目录生成一个 config.ini 文件再拷过来修改。</p>
-<p>4) 以下两个参数会大量减少运行需要的内存，原理是不保存与交易所账户无关的历史数据索引。</p>
-<p>track-account = &ldquo;1.2.12345&rdquo;
-partial-operations = true</p>
+  - config.ini 里默认 plugins 前有个“#”符号，需要删除；
+  - 默认的 plugins 配置是 “witness account_history market_history”，这里实际是去掉“market_history”；
+  - 如果 config.ini 里没找到该配置项，比如从老版本升级上来时不会更新已有配置文件，
+    - 可以在 config.ini 最前面添加一行（不要加在文件最后面），
+    - 也可以另外找个空目录生成一个 config.ini 文件再拷过来修改。</p>
+<ol>
+<li>以下两个参数会大量减少运行需要的内存，原理是不保存与交易所账户无关的历史数据索引。</li>
+</ol>
+<pre><code>track-account = &quot;1.2.12345&quot;
+partial-operations = true
+</code></pre>
+
 <p>请将 12345 替换成你的账户数字 ID 。数字前的 &ldquo;1.2.&rdquo; 表示类型是账户。
 注： config.ini 里默认 track-account 前面有个“#”符号，需要删除。</p>
 <p>如果需要监控多个账户，则使用多个 track-account 配置，如：</p>
-<p>track-account = &ldquo;1.2.12345&rdquo;
-track-account = &ldquo;1.2.12346&rdquo;
-partial-operations = true</p>
+<pre><code>track-account = &quot;1.2.12345&quot;
+track-account = &quot;1.2.12346&quot;
+partial-operations = true
+</code></pre>
+
 <p>注：
 目前存在一个 BUG ，配置多个 track-account 会导致下面的日志修改不生效。
 绕过这个问题的方法，是不动 config.ini ，而是启动 witness_node 的时候，在命令行后面添加 &ndash;track-account 参数，比如：</p>
-<p>./witness_node &ndash;track-account &ldquo;"1.2.12345"&rdquo; &ndash;track-account &ldquo;"1.2.12346"&ldquo;</p>
+<pre><code>./witness_node --track-account &quot;\&quot;1.2.12345\&quot;&quot; --track-account &quot;\&quot;1.2.12346\&quot;&quot;
+</code></pre>
+
 <p>注：
-<em> 参数首尾双引号需要保留，所以使用 \ 进行转义。 Linux 下可以使用双引号外加一层单引号的方式，则不需要转义。
-</em> 如果需要增加、修改、删除追踪账号，修改后，需要重建索引才能生效。
+- 参数首尾双引号需要保留，所以使用 \ 进行转义。 Linux 下可以使用双引号外加一层单引号的方式，则不需要转义。
+- 如果需要增加、修改、删除追踪账号，修改后，需要重建索引才能生效。
   方法是按 Ctrl + C 结束程序，然后加 &ndash;replay-blockchain 参数重新启动，如：</p>
-<p>./witness_node -d witness_node_data_dir &ndash;track-account &ldquo;"1.2.12345"&rdquo; &ndash;track-account &ldquo;"1.2.12346"&rdquo; &ndash;replay-blockchain</p>
-<p>5.1.2 重新执行</p>
+<pre><code>  ./witness_node -d witness_node_data_dir --track-account &quot;\&quot;1.2.12345\&quot;&quot; --track-account &quot;\&quot;1.2.12346\&quot;&quot; --replay-blockchain
+</code></pre>
+
+<h4 id="512">5.1.2 重新执行<a class="headerlink" href="#512" title="Permanent link">&para;</a></h4>
 <p>再次启动 witness_node ，开始同步数据。根据网络条件、服务器硬件条件不同，初次同步可能需要花几个小时到几天时间。</p>
-<p>./witness_node -d witness_node_data_dir &ndash;rpc-endpoint 127.0.0.1:8090 &ndash;track-account &ldquo;"1.2.12345"&rdquo; &ndash;track-account &ldquo;"1.2.12346"&rdquo; &ndash;partial-operations true</p>
+<pre><code>./witness_node -d witness_node_data_dir --rpc-endpoint 127.0.0.1:8090 --track-account &quot;\&quot;1.2.12345\&quot;&quot; --track-account &quot;\&quot;1.2.12346\&quot;&quot; --partial-operations true
+</code></pre>
+
 <p>上述命令中，使用 &ndash;rpc-endpoint 开启节点 API 服务，这样就可以使用 cli_wallet 和其他程序连接使用</p>
 <p>5.2 连接到 witness_node 的 cli_wallet</p>
-<p>./cli_wallet -w witness_wallet.json -s ws://127.0.0.1:8090 -H 127.0.0.1:8091</p>
+<pre><code>./cli_wallet -w witness_wallet.json -s ws://127.0.0.1:8090 -H 127.0.0.1:8091
+</code></pre>
+
 <p>上述命令使用 -w 参数指定钱包文件， -s 参数连接到 witness_node ， -H 参数开启钱包 API 服务</p>
 <p>执行成功会显示：</p>
-<p>new &gt;&gt;&gt; </p>
+<pre><code>new &gt;&gt;&gt; 
+</code></pre>
+
 <p>首先需要为钱包设置一个密码</p>
-<p>new &gt;&gt;&gt; set_password my_password_1234</p>
+<pre><code>new &gt;&gt;&gt; set_password my_password_1234
+</code></pre>
+
 <p>执行成功会显示：</p>
-<p>locked &gt;&gt;&gt;</p>
+<pre><code>locked &gt;&gt;&gt;
+</code></pre>
+
 <p>然后解锁钱包</p>
-<p>locked &gt;&gt;&gt; unlock my_password_1234</p>
+<pre><code>locked &gt;&gt;&gt; unlock my_password_1234
+</code></pre>
+
 <p>解锁成功会显示：</p>
-<p>unlocked &gt;&gt;&gt;</p>
+<pre><code>unlocked &gt;&gt;&gt;
+</code></pre>
+
 <p>使用 info 命令可以查看当前同步情况</p>
-<p>unlocked &gt;&gt;&gt; info
+<pre><code>unlocked &gt;&gt;&gt; info
 info
 {
-  &ldquo;head_block_num&rdquo;: 17249870,
-  &ldquo;head_block_id&rdquo;: &ldquo;0107364e2bf1c4ed1331ece4ad7824271e563fbb&rdquo;,
-  &ldquo;head_block_age&rdquo;: &ldquo;23 seconds old&rdquo;,
-  &ldquo;next_maintenance_time&rdquo;: &ldquo;31 minutes in the future&rdquo;,
-  &ldquo;chain_id&rdquo;: &ldquo;4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8&rdquo;,
-  &ldquo;participation&rdquo;: &ldquo;96.87500000000000000&rdquo;,
-  &hellip;
-}</p>
-<p>5.3 delayed_node</p>
+  &quot;head_block_num&quot;: 17249870,
+  &quot;head_block_id&quot;: &quot;0107364e2bf1c4ed1331ece4ad7824271e563fbb&quot;,
+  &quot;head_block_age&quot;: &quot;23 seconds old&quot;,
+  &quot;next_maintenance_time&quot;: &quot;31 minutes in the future&quot;,
+  &quot;chain_id&quot;: &quot;4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8&quot;,
+  &quot;participation&quot;: &quot;96.87500000000000000&quot;,
+  ...
+}
+</code></pre>
+
+<h3 id="53-delayed_node">5.3 delayed_node<a class="headerlink" href="#53-delayed_node" title="Permanent link">&para;</a></h3>
 <p>初次执行：</p>
-<p>./delayed_node -d delayed_node_data_dir &ndash;trusted-node 127.0.0.1:8090</p>
+<pre><code>./delayed_node -d delayed_node_data_dir --trusted-node 127.0.0.1:8090
+</code></pre>
+
 <p>然后按 Ctrl+C 结束它。</p>
 <p>参考 witness_node 章节修改 delayed_node_data_dir 目录下的 config.ini 文件，然后重新启动</p>
-<p>./delayed_node -d delayed_node_data_dir &ndash;trusted-node 127.0.0.1:8090 &ndash;rpc-endpoint 127.0.0.1:8092  &ndash;track-account &ldquo;"1.2.12345"&rdquo; &ndash;track-account &ldquo;"1.2.12346"&rdquo; &ndash;partial-operations true -s &ldquo;0.0.0.0:0&rdquo; &ndash;p2p-endpoint &ldquo;0.0.0.0:0&rdquo; &ndash;seed-nodes &ldquo;[]&rdquo;</p>
+<pre><code>./delayed_node -d delayed_node_data_dir --trusted-node 127.0.0.1:8090 --rpc-endpoint 127.0.0.1:8092  --track-account &quot;\&quot;1.2.12345\&quot;&quot; --track-account &quot;\&quot;1.2.12346\&quot;&quot; --partial-operations true -s &quot;0.0.0.0:0&quot; --p2p-endpoint &quot;0.0.0.0:0&quot; --seed-nodes &quot;[]&quot;
+</code></pre>
+
 <p>上述命令中， 最后的3个参数 -s &ndash;p2p-endpoint &ndash;seed-nodes 的目的是防止节点直接与 p2p 网络建立连接，导致数据不可信。</p>
 <p>注：
 delayed_node 初次同步时，控制台输出会很多，可以采取重定向到文件然后查看文件的方式来检查同步情况</p>
-<p>5.4 连接到 delayed_node 的 cli_wallet</p>
-<p>./cli_wallet -w delayed_wallet.json -s ws://127.0.0.1:8092 -H 127.0.0.1:8093</p>
+<h3 id="54-delayed_node-cli_wallet">5.4 连接到 delayed_node 的 cli_wallet<a class="headerlink" href="#54-delayed_node-cli_wallet" title="Permanent link">&para;</a></h3>
+<pre><code>./cli_wallet -w delayed_wallet.json -s ws://127.0.0.1:8092 -H 127.0.0.1:8093
+</code></pre>
+
 <p>请参考前面的章节设置密码及解锁。</p>
-<ol>
-<li>账户设置</li>
-</ol>
+<h2 id="6">6. 账户设置<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
 <p>考虑到安全性，可以使用两个账号分别处理充值和提现，这里假设 deposit-account 用于充值，withdrawal-account 用于提现。</p>
-<p>6.1 修改充值账户的备注密钥</p>
+<h3 id="61">6.1 修改充值账户的备注密钥<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
 <p>在上述任何一个 cli_wallet 中执行 suggest_brain_key ，会得到一对密钥，示例如下：</p>
-<p>unlocked &gt;&gt;&gt; suggest_brain_key
+<pre><code>unlocked &gt;&gt;&gt; suggest_brain_key
 suggest_brain_key
 {
-  &ldquo;brain_priv_key&rdquo;: &ldquo;.....&rdquo;,
-  &ldquo;wif_priv_key&rdquo;: &ldquo;5JxyJx2KyDmAx5kpkMthWEpqGjzpwtGtEJigSMz5XE1AtrQaZXu&rdquo;,
-  &ldquo;pub_key&rdquo;: &ldquo;BTS69uKRvM8dAPn8En4SCi2nMTHKXt1rWrohFbwaPwv2rAbT3XFzf&rdquo;
-}</p>
+  &quot;brain_priv_key&quot;: &quot;.....&quot;,
+  &quot;wif_priv_key&quot;: &quot;5JxyJx2KyDmAx5kpkMthWEpqGjzpwtGtEJigSMz5XE1AtrQaZXu&quot;,
+  &quot;pub_key&quot;: &quot;BTS69uKRvM8dAPn8En4SCi2nMTHKXt1rWrohFbwaPwv2rAbT3XFzf&quot;
+}
+</code></pre>
+
 <p>在轻钱包里，账户权限页面，将备注密钥修改为上述结果中的 pub_key </p>
 <p>注：
 1. 修改过后请注意备份轻钱包，否则轻钱包里可能无法解密修改前的备注。
 2. 修改过后，如果仍需要使用轻钱包进行带备注的转账、或者读取新的转入/转出转账备注，
    则需要将上述 wif_priv_key 导入到轻钱包，导入步骤参考如下教程中的第二步： http://btsabc.org/article-761-1.html 。
    导入后可以做个新的备份。</p>
-<p>6.2 将充值账户的备注密钥导入到连接到 delayed_node 的 cli_wallet</p>
+<h3 id="62-delayed_node-cli_wallet">6.2 将充值账户的备注密钥导入到连接到 delayed_node 的 cli_wallet<a class="headerlink" href="#62-delayed_node-cli_wallet" title="Permanent link">&para;</a></h3>
 <p>如果钱包已锁定，需要先用 unlock 命令解锁。</p>
 <p>这里需用到上述 suggest_brain_key 结果中的 wif_priv_key ：</p>
-<p>unlocked &gt;&gt;&gt; import_key deposit-account 5JxyJx2KyDmAx5kpkMthWEpqGjzpwtGtEJigSMz5XE1AtrQaZXu</p>
+<pre><code>unlocked &gt;&gt;&gt; import_key deposit-account 5JxyJx2KyDmAx5kpkMthWEpqGjzpwtGtEJigSMz5XE1AtrQaZXu
+</code></pre>
+
 <p>导入时 cli_wallet 会自动生成一个备份文件，可删除。</p>
 <p>这时可按 Ctrl + D 退出钱包，对钱包文件 delayed_wallet.json 进行备份。</p>
 <p>退出时会报个错，不用管它。</p>
 <p>如果编译时没有引入 readline 库，则需要用 Ctrl + C 退出</p>
-<p>6.3 从轻钱包中取得提现账户的活跃权限密钥</p>
+<h3 id="63">6.3 从轻钱包中取得提现账户的活跃权限密钥<a class="headerlink" href="#63" title="Permanent link">&para;</a></h3>
 <p>参考 http://btsabc.org/article-761-1.html</p>
-<p>6.4 将提现账户的活跃权限密钥导入到连接到 witness_node 的 cli_wallet</p>
-<p>unlocked &gt;&gt;&gt; import_key withdrawal-account 5xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+<h3 id="64-witness_node-cli_wallet">6.4 将提现账户的活跃权限密钥导入到连接到 witness_node 的 cli_wallet<a class="headerlink" href="#64-witness_node-cli_wallet" title="Permanent link">&para;</a></h3>
+<pre><code>unlocked &gt;&gt;&gt; import_key withdrawal-account 5xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+</code></pre>
+
 <p>同样可以对钱包文件作个备份。</p>
 <p>注：检查一下提现账户的活跃权限密钥和备注密钥是否一样，如果不一样，则需要将备注密钥也导入，否则无法处理带备注的提现。导入命令仍然是：</p>
-<p>unlocked &gt;&gt;&gt; import_key withdrawal-account 5xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
-<ol>
-<li>钱包命令</li>
-</ol>
+<pre><code>unlocked &gt;&gt;&gt; import_key withdrawal-account 5xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+</code></pre>
+
+<h2 id="7">7. 钱包命令<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
 <p>cli_wallet 里，
-<em> 使用 help 命令可以列出命令清单及参数
-</em> 如果编译时有 doxygen ，使用 gethelp 命令可以获取具体命令的参数说明及示例，如</p>
-<p>unlocked &gt;&gt;&gt; gethelp get_account</p>
-<ol>
-<li>钱包 API</li>
-</ol>
+- 使用 help 命令可以列出命令清单及参数
+- 如果编译时有 doxygen ，使用 gethelp 命令可以获取具体命令的参数说明及示例，如</p>
+<pre><code>unlocked &gt;&gt;&gt; gethelp get_account
+</code></pre>
+
+<h2 id="8-api">8. 钱包 API<a class="headerlink" href="#8-api" title="Permanent link">&para;</a></h2>
 <p>钱包开启了 http rpc 方式的 API 服务时，可以通过 http rpc 方式调用所有钱包命令，效果与在钱包里输入命令相同。</p>
 <p>示例：</p>
-<p>curl -d &lsquo;{&ldquo;jsonrpc&rdquo;: &ldquo;2.0&rdquo;, &ldquo;method&rdquo;: &ldquo;get_block&rdquo;, &ldquo;params&rdquo;: [1], &ldquo;id&rdquo;: 1}&rsquo; http://127.0.0.1:8093/rpc</p>
+<pre><code>curl -d '{&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;method&quot;: &quot;get_block&quot;, &quot;params&quot;: [1], &quot;id&quot;: 1}' http://127.0.0.1:8093/rpc
+</code></pre>
+
 <p>即：method 传入命令名，params 数组传入参数清单。</p>
 <p>返回：</p>
-<p>{&ldquo;id&rdquo;:1,&rdquo;result&rdquo;:{&ldquo;previous&rdquo;:&rdquo;0000000000000000000000000000000000000000&rdquo;,&rdquo;timestamp&rdquo;:&rdquo;2015-10-13T14:12:24&rdquo;,&rdquo;witness&rdquo;:&rdquo;1.6.8&rdquo;,&rdquo;transaction_merkle_root&rdquo;:&rdquo;0000000000000000000000000000000000000000&rdquo;,&rdquo;extensions&rdquo;:[],&rdquo;witness_signature&rdquo;:&rdquo;1f53542bb60f1f7a653bac70d6b1613e73b9adc952031e30e591e601dd60d493ba5c9a832e155ff0c40ea1dd53512e9f93bf65a8191497ea67d701bc2502f93af7&rdquo;,&rdquo;transactions&rdquo;:[],&rdquo;block_id&rdquo;:&rdquo;00000001b656820f72f6b28cda811778632d4998&rdquo;,&rdquo;signing_key&rdquo;:&rdquo;BTS6ZQEFsPmG6jWspNDdZHkehNmPpG7gkSHkphmRZQWaJ2LrcaVSi&rdquo;,&rdquo;transaction_ids&rdquo;:[]}}</p>
+<pre><code class="json">{
+    &quot;id&quot;: 1,
+    &quot;result&quot;: {
+        &quot;previous&quot;: &quot;0000000000000000000000000000000000000000&quot;,
+        &quot;timestamp&quot;: &quot;2015-10-13T14:12:24&quot;,
+        &quot;witness&quot;: &quot;1.6.8&quot;,
+        &quot;transaction_merkle_root&quot;: &quot;0000000000000000000000000000000000000000&quot;,
+        &quot;extensions&quot;: [],
+        &quot;witness_signature&quot;: &quot;1f53542bb60f1f7a653bac70d6b1613e73b9adc952031e30e591e601dd60d493ba5c9a832e155ff0c40ea1dd53512e9f93bf65a8191497ea67d701bc2502f93af7&quot;,
+        &quot;transactions&quot;: [],
+        &quot;block_id&quot;: &quot;00000001b656820f72f6b28cda811778632d4998&quot;,
+        &quot;signing_key&quot;: &quot;BTS6ZQEFsPmG6jWspNDdZHkehNmPpG7gkSHkphmRZQWaJ2LrcaVSi&quot;,
+        &quot;transaction_ids&quot;: []
+    }
+}
+</code></pre>
+
 <p>如果执行成功，结果会有 result ，否则会有 error 。</p>
 <p>注意：
 在钱包里输入命令，返回结果是经过美化的；使用 http rpc 请求时，返回的是 json 格式的原始数据。关于原始数据，需要注意的有：
-<em> 金额是 {&ldquo;amount&rdquo;:467116432,&rdquo;asset_id&rdquo;:&rdquo;1.3.0&rdquo;} 格式，其中
-  * asset_id 可以通过 get_asset 命令查到具体名称， BTS 的 asset_id 是 1.3.0 ，其他资产有其他 id
-  * amount 是数量去掉小数点之后的值，比如 BTS 是 5 位小数，上面例子中实际是 4671.16432 BTS
-</em> 账户是 1.2.xxxxx 的格式，可以通过 get_account 获取账户信息
-* 操作类型（op）是数值格式，比如 0 表示转账操作</p>
-<ol>
-<li>处理充值</li>
-</ol>
+- 金额是 {&ldquo;amount&rdquo;:467116432,&rdquo;asset_id&rdquo;:&rdquo;1.3.0&rdquo;} 格式，其中
+  - asset_id 可以通过 get_asset 命令查到具体名称， BTS 的 asset_id 是 1.3.0 ，其他资产有其他 id
+  - amount 是数量去掉小数点之后的值，比如 BTS 是 5 位小数，上面例子中实际是 4671.16432 BTS
+- 账户是 1.2.xxxxx 的格式，可以通过 get_account 获取账户信息
+- 操作类型（op）是数值格式，比如 0 表示转账操作</p>
+<h2 id="9">9. 处理充值<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
 <p>使用 get_relative_account_history 命令来查询充值账户历史，检测是否有新的充值。如：</p>
-<p>unlocked &gt;&gt;&gt; get_relative_account_history deposit-account 1 100 100</p>
-<p>unlocked &gt;&gt;&gt; get_relative_account_history deposit-account 101 100 200</p>
-<p>curl -d &lsquo;{&ldquo;jsonrpc&rdquo;: &ldquo;2.0&rdquo;, &ldquo;method&rdquo;: &ldquo;get_relative_account_history&rdquo;, &ldquo;params&rdquo;: [&ldquo;deposit-account&rdquo;,1,100,100], &ldquo;id&rdquo;: 1}&rsquo; http://127.0.0.1:8093/rpc</p>
+<pre><code>unlocked &gt;&gt;&gt; get_relative_account_history deposit-account 1 100 100
+
+unlocked &gt;&gt;&gt; get_relative_account_history deposit-account 101 100 200
+
+curl -d '{&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;method&quot;: &quot;get_relative_account_history&quot;, &quot;params&quot;: [&quot;deposit-account&quot;,1,100,100], &quot;id&quot;: 1}' http://127.0.0.1:8093/rpc
+</code></pre>
+
 <p>四个参数分别为：账户名，最小编号，最大返回数量，最大编号。编号从 1 开始。</p>
 <p>注：
 目前输入最大数量超过 100 时有个bug，导致结果不准，使用时请避免 limit 超过 100 。</p>
 <p>返回结果是一个数组。
-<em> 如果没有新充值，则数组长度为 0 。
-</em> 如果有新的记录，其中第N条数据为 result[N]，格式可能为：</p>
-<p>{<br />
-   &ldquo;memo&rdquo;:&rdquo;&ldquo;,
-   &ldquo;description&rdquo;:&rdquo;Transfer 1 BTS from a to b &ndash; Unlock wallet to see memo.   (Fee: 0.22941 BTS)&rdquo;,
-   &ldquo;op&rdquo;:{<br />
-      &ldquo;id&rdquo;:&rdquo;1.11.1234567&rdquo;,
-      &ldquo;op&rdquo;:[<br />
+- 如果没有新充值，则数组长度为 0 。
+- 如果有新的记录，其中第N条数据为 result[N]，格式可能为：</p>
+<pre><code class="json">{  
+   &quot;memo&quot;:&quot;&quot;,
+   &quot;description&quot;:&quot;Transfer 1 BTS from a to b -- Unlock wallet to see memo.   (Fee: 0.22941 BTS)&quot;,
+   &quot;op&quot;:{  
+      &quot;id&quot;:&quot;1.11.1234567&quot;,
+      &quot;op&quot;:[  
          0,
-         {<br />
-            &ldquo;fee&rdquo;:{<br />
-               &ldquo;amount&rdquo;:22941,
-               &ldquo;asset_id&rdquo;:&rdquo;1.3.0&rdquo;
+         {  
+            &quot;fee&quot;:{  
+               &quot;amount&quot;:22941,
+               &quot;asset_id&quot;:&quot;1.3.0&quot;
             },
-            &ldquo;from&rdquo;:&rdquo;1.2.12345&rdquo;,
-            &ldquo;to&rdquo;:&rdquo;1.2.45678&rdquo;,
-            &ldquo;amount&rdquo;:{<br />
-               &ldquo;amount&rdquo;:100000,
-               &ldquo;asset_id&rdquo;:&rdquo;1.3.0&rdquo;
+            &quot;from&quot;:&quot;1.2.12345&quot;,
+            &quot;to&quot;:&quot;1.2.45678&quot;,
+            &quot;amount&quot;:{  
+               &quot;amount&quot;:100000,
+               &quot;asset_id&quot;:&quot;1.3.0&quot;
             },
-            &ldquo;memo&rdquo;:{<br />
-               &ldquo;from&rdquo;:&rdquo;BTS7NLcZJzqq3mvKfcqoN52ainajDckyMp5SYRgzicfbHD6u587ib&rdquo;,
-               &ldquo;to&rdquo;:&rdquo;BTS7SakKqZ8HamkTr7FdPn9qYxYmtSh2QzFNn49CiFAkdFAvQVMg6&rdquo;,
-               &ldquo;nonce&rdquo;:&rdquo;5333758904325274680&rdquo;,
-               &ldquo;message&rdquo;:&rdquo;0b809fa8169453422343434366514a153981ea&rdquo;
+            &quot;memo&quot;:{  
+               &quot;from&quot;:&quot;BTS7NLcZJzqq3mvKfcqoN52ainajDckyMp5SYRgzicfbHD6u587ib&quot;,
+               &quot;to&quot;:&quot;BTS7SakKqZ8HamkTr7FdPn9qYxYmtSh2QzFNn49CiFAkdFAvQVMg6&quot;,
+               &quot;nonce&quot;:&quot;5333758904325274680&quot;,
+               &quot;message&quot;:&quot;0b809fa8169453422343434366514a153981ea&quot;
             },
-            &ldquo;extensions&rdquo;:[<br />
+            &quot;extensions&quot;:[  
             ]
          }
       ],
-      &ldquo;result&rdquo;:[<br />
+      &quot;result&quot;:[  
          0,
-         {<br />
+         {  
          }
       ],
-      &ldquo;block_num&rdquo;:1234567,
-      &ldquo;trx_in_block&rdquo;:7,
-      &ldquo;op_in_trx&rdquo;:0,
-      &ldquo;virtual_op&rdquo;:1234
+      &quot;block_num&quot;:1234567,
+      &quot;trx_in_block&quot;:7,
+      &quot;op_in_trx&quot;:0,
+      &quot;virtual_op&quot;:1234
    }
-}</p>
+}
+</code></pre>
+
 <p>其中 result[N][&ldquo;op&rdquo;][&ldquo;op&rdquo;] 是数组格式，取数组里第一个元素 result[N][&ldquo;op&rdquo;][&ldquo;op&rdquo;][0] ，如果是 0 ，则表示转账；
 则可以取第二个元素中 &ldquo;to&rdquo; 字段，即 result[N][&ldquo;op&rdquo;][&ldquo;op&rdquo;][1][&ldquo;to&rdquo;] ，判断它是否与 deposit-account 的 ID 相同，来判断是否转入；
 如果是，则取第二个字段中 &ldquo;amount&rdquo; 字段里 &ldquo;asset_id&rdquo; 字段 result[N][&ldquo;op&rdquo;][&ldquo;op&rdquo;][1][&ldquo;amount&rdquo;][&ldquo;asset_id&rdquo;] 判断是否正确资产类型，
@@ -433,79 +561,92 @@ result[N][&ldquo;op&rdquo;][&ldquo;id&rdquo;] 是这笔转账的唯一 ID ，可
 <p>另外，由于他方转账时，可能只记录交易ID （哈希值），或者交易签名，而不记录操作ID或者块号，
 为了方便检查问题，建议在充值检测时，记录操作对应的交易 ID 和交易签名，方法如下：</p>
 <p>根据上述 block_num ，调用 get_block 命令获取块内容，如</p>
-<p>unlocked &gt;&gt;&gt; get_block 16000000</p>
-<p>curl -d &lsquo;{&ldquo;jsonrpc&rdquo;: &ldquo;2.0&rdquo;, &ldquo;method&rdquo;: &ldquo;get_block&rdquo;, &ldquo;params&rdquo;: [160000], &ldquo;id&rdquo;: 1}&rsquo; http://127.0.0.1:8093/rpc</p>
+<pre><code>unlocked &gt;&gt;&gt; get_block 16000000
+
+curl -d '{&quot;jsonrpc&quot;: &quot;2.0&quot;, &quot;method&quot;: &quot;get_block&quot;, &quot;params&quot;: [160000], &quot;id&quot;: 1}' http://127.0.0.1:8093/rpc
+</code></pre>
+
 <p>设结果中块内容为 result ，根据上述 trx_in_block ，
 取 result[&ldquo;transaction_ids&rdquo;][trx_in_block] ，即为对应的交易 ID；
 取 result[&ldquo;transactions&rdquo;][trx_in_block][&ldquo;signatures&rdquo;] ，即为交易签名，是个数组，因为多重签名账户转账可能包含多个签名</p>
 <p>注：
-1) 钱包必须先解锁才能解密备注。
-2) 如果检测到有充值的备注不正确，或者资产类型不正确，注意不要简单退回，因为可能是从其他交易所转来的，退回后对方处理起来也会很麻烦。
-3) 如果不使用 delayed_node ，而只使用一个 witness_node ，需要自行判断交易是否会被回退。
+1. 钱包必须先解锁才能解密备注。
+2. 如果检测到有充值的备注不正确，或者资产类型不正确，注意不要简单退回，因为可能是从其他交易所转来的，退回后对方处理起来也会很麻烦。
+3. 如果不使用 delayed_node ，而只使用一个 witness_node ，需要自行判断交易是否会被回退。
    可参考下面“提现”章节的网络状态检查，再加上一个较大的确认数来判断，比如需要 50 个确认。
-4) 一个块里很可能有多笔充值，结果的 block_num 相同，甚至可能 trx_in_block 和 op_in_trx 也相同，但 virtual_op 不同，需注意处理。
+4. 一个块里很可能有多笔充值，结果的 block_num 相同，甚至可能 trx_in_block 和 op_in_trx 也相同，但 virtual_op 不同，需注意处理。
    可以肯定 blocknum + trx_in_block + op_in_trx + vitrual_op 的组合是唯一的。
    这里还要注意个问题， virtual_op 的数据目前有个 BUG，如果不是每次重启参数都一样并且都 replay ，重新查历史数据，会发现这个值会不一致
-5) 由于存在“提议”功能，可以延期执行，用 get_block 然后用 trx_in_block 定位时可能取不到对应交易，或者取到的交易与充值操作不对应。
+5. 由于存在“提议”功能，可以延期执行，用 get_block 然后用 trx_in_block 定位时可能取不到对应交易，或者取到的交易与充值操作不对应。
    延期执行功能目前很少有人用，但理论上存在，请注意错误处理。</p>
-<ol>
-<li>处理提现</li>
-</ol>
-<p>10.1 网络状态检查</p>
+<h2 id="10">10. 处理提现<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<h3 id="101">10.1 网络状态检查<a class="headerlink" href="#101" title="Permanent link">&para;</a></h3>
 <p>为了安全起见，只有当 witness_node 网络正常时，才处理提现。</p>
 <p>在连接到 witness_node 的 cli_wallet 中使用 info 命令检查网络状态。</p>
-<p>unlocked &gt;&gt;&gt; info
+<pre><code>unlocked &gt;&gt;&gt; info
 info
 {
-  &ldquo;head_block_num&rdquo;: 17249870,
-  &ldquo;head_block_id&rdquo;: &ldquo;0107364e2bf1c4ed1331ece4ad7824271e563fbb&rdquo;,
-  &ldquo;head_block_age&rdquo;: &ldquo;23 seconds old&rdquo;,
-  &ldquo;next_maintenance_time&rdquo;: &ldquo;31 minutes in the future&rdquo;,
-  &ldquo;chain_id&rdquo;: &ldquo;4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8&rdquo;,
-  &ldquo;participation&rdquo;: &ldquo;96.87500000000000000&rdquo;,
-  &hellip;
-}</p>
+  &quot;head_block_num&quot;: 17249870,
+  &quot;head_block_id&quot;: &quot;0107364e2bf1c4ed1331ece4ad7824271e563fbb&quot;,
+  &quot;head_block_age&quot;: &quot;23 seconds old&quot;,
+  &quot;next_maintenance_time&quot;: &quot;31 minutes in the future&quot;,
+  &quot;chain_id&quot;: &quot;4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8&quot;,
+  &quot;participation&quot;: &quot;96.87500000000000000&quot;,
+  ...
+}
+</code></pre>
+
 <p>需检查的字段有：
-<em> head_block_age 最好是在 1 分钟以内
-</em> participation 最好在 80 以上，表示 witness_node 所连网络有 80% 的出块节点正常工作</p>
+- head_block_age 最好是在 1 分钟以内
+- participation 最好在 80 以上，表示 witness_node 所连网络有 80% 的出块节点正常工作</p>
 <p>另外，网络正常时，在连接到 delayed_node 的 cli_wallet 中查看 info 时，
 看到的 head_block_num 与连接到 witness_node 的 cli_wallet 中看到的不会相差太大（一般 30 以内）；
 同时 head_block_age 也不会太久远（一般 1 分钟左右）。
 这个可以作为参考。</p>
-<p>10.2 提现账户余额检查</p>
+<h3 id="102">10.2 提现账户余额检查<a class="headerlink" href="#102" title="Permanent link">&para;</a></h3>
 <p>使用 list_account_balances 命令检查提现账户余额是否足够（注意资产类型、并且算上手续费）</p>
-<p>unlocked &gt;&gt;&gt; list_account_balances withdrawal-account</p>
+<pre><code>unlocked &gt;&gt;&gt; list_account_balances withdrawal-account
+</code></pre>
+
 <p>注：
-1) 注意资产类型
-2) 注意加上手续费。因为备注是按长度收费，所以带备注时手续费会比不带备注时高一些。</p>
-<p>10.3 提现目的账号名检查</p>
+1. 注意资产类型
+2. 注意加上手续费。因为备注是按长度收费，所以带备注时手续费会比不带备注时高一些。</p>
+<h3 id="103">10.3 提现目的账号名检查<a class="headerlink" href="#103" title="Permanent link">&para;</a></h3>
 <p>使用 get_account_id 命令可以检查客户输入的提现目的账号是否有效</p>
-<p>locked &gt;&gt;&gt; get_account_id test-123
+<pre><code>locked &gt;&gt;&gt; get_account_id test-123
 get_account_id test-123
-&ldquo;1.2.96698&rdquo;</p>
-<p>locked &gt;&gt;&gt; get_account_id test-124
+&quot;1.2.96698&quot;
+
+locked &gt;&gt;&gt; get_account_id test-124
 get_account_id test-124
 10 assert_exception: Assert Exception
 rec &amp;&amp; rec-&gt;name == account_name_or_id:
     {}
-    th_a  wallet.cpp:597 get_account</p>
-<p>10.4 发送提现</p>
+    th_a  wallet.cpp:597 get_account
+
+</code></pre>
+
+<h3 id="104">10.4 发送提现<a class="headerlink" href="#104" title="Permanent link">&para;</a></h3>
 <p>使用 transfer2 命令发送提现交易。如：</p>
-<p>unlocked &gt;&gt;&gt; transfer2 withdrawal-account to-account 100 BTS &ldquo;some memo&rdquo;</p>
+<pre><code>unlocked &gt;&gt;&gt; transfer2 withdrawal-account to-account 100 BTS &quot;some memo&quot;
+</code></pre>
+
 <p>参数分别是：源账户名，目的账户名，金额，币种，备注 </p>
 <p>该命令会广播交易，然后返回一个数组，第一个元素是交易 id ，第二个元素是详细交易内容</p>
 <p>注：
-1) 如果币种是 BTS ，金额小数位数最多 5 位。如果是其他资产，通过 get_asset 命令可以查看资产的小数位数，&rdquo;precision&rdquo;字段。
-2) 也可以使用 transfer 命令，但是这样不会直接返回交易 ID ，而是需要调用其他 API 来计算出来，所以不推荐。
-3) 备注通常用 UTF-8 编码</p>
-<p>10.5 提现结果检查</p>
+1. 如果币种是 BTS ，金额小数位数最多 5 位。如果是其他资产，通过 get_asset 命令可以查看资产的小数位数，&rdquo;precision&rdquo;字段。
+2. 也可以使用 transfer 命令，但是这样不会直接返回交易 ID ，而是需要调用其他 API 来计算出来，所以不推荐。
+3. 备注通常用 UTF-8 编码</p>
+<h3 id="105">10.5 提现结果检查<a class="headerlink" href="#105" title="Permanent link">&para;</a></h3>
 <p>在连接到 delayed_node 的 cli_wallet 中进行结果检查。</p>
 <p>用 get_relative_account_history 命令获取 withdrawal-account 的提现历史，如果发现有新的记录，表示交易已经进块并且不可回退；</p>
 <p>根据该条记录的 block_num 字段，使用 get_block 命令查询详情</p>
-<p>unlocked &gt;&gt;&gt; get_block 12345</p>
+<pre><code>unlocked &gt;&gt;&gt; get_block 12345
+</code></pre>
+
 <p>返回结果中， transaction_ids 字段数据里应该包含前面的交易 id ，。</p>
 <p>建议记录上述 get_relative_account_history 结果中的 id (1.11.x), block_num, trx_in_block 备查。</p>
-<p>10.6 关于失败重发</p>
+<h3 id="106">10.6 关于失败重发<a class="headerlink" href="#106" title="Permanent link">&para;</a></h3>
 <p>在有些情况下可能交易发送后，没有及时被打包进入区块。</p>
 <p>与比特币不同， BTS 的交易里面有个超时时间字段（expiration），
 使用 cli_wallet 签名广播交易时，该字段值默认是本机系统时间加 2 分钟。
@@ -513,15 +654,13 @@ rec &amp;&amp; rec-&gt;name == account_name_or_id:
 <p>如果在网络时间到达该超时时间之后，交易仍然没有被打包进块，则该交易会被所有网络节点丢弃，不再有可能被打包。</p>
 <p>因此，如果出现交易广播了但没有被打包，先检查本机系统时间是否滞后。</p>
 <p>此外，如果发现 delayed_node 里一直没有该笔提现，
-<em> 如果 delayed_node 最新块时间已经过了交易的超时时间，那么重发是安全的。
-</em> 如果还没超时，先检查 witness_node 里该笔交易是否已经被打包。
-  * 如果 witness_node 里也没有，则继续耐心等超时。
-  * 如果 witness_node 里有，那么请耐心等待该笔出现在 delayed_node ，或者从 witness_node 里消失。
-    * 如果等待一段时间（比如几分钟）后交易仍然没有出现在 delayed_node ，也没从 witness_node 里消失，则很可能 witness_node 进入了一个较短分叉链，或者网络出现问题，导致交易无法完全确认。</p>
-<ol>
-<li>
-<p>其他</p>
-</li>
+- 如果 delayed_node 最新块时间已经过了交易的超时时间，那么重发是安全的。
+- 如果还没超时，先检查 witness_node 里该笔交易是否已经被打包。
+  - 如果 witness_node 里也没有，则继续耐心等超时。
+  - 如果 witness_node 里有，那么请耐心等待该笔出现在 delayed_node ，或者从 witness_node 里消失。
+    - 如果等待一段时间（比如几分钟）后交易仍然没有出现在 delayed_node ，也没从 witness_node 里消失，则很可能 witness_node 进入了一个较短分叉链，或者网络出现问题，导致交易无法完全确认。</p>
+<h2 id="11_1">11. 其他<a class="headerlink" href="#11_1" title="Permanent link">&para;</a></h2>
+<ul>
 <li>
 <p>cli_wallet 有个参数 &ndash;daemon ，使用此参数启动后，会在后台运行</p>
 </li>
@@ -554,29 +693,25 @@ rec &amp;&amp; rec-&gt;name == account_name_or_id:
 </li>
 <li>在离线机器，启动 witness_node 及 cli_wallet ，使用 suggest_brain_key 命令离线生成密钥对；</li>
 <li>然后用轻钱包将账户密钥修改为上述密钥，则账户进入冷存状态</li>
-<li>
-<p>需要动用冷存账户时，</p>
-<ul>
+<li>需要动用冷存账户时，<ul>
 <li>可以用暂时变热的方式，即将私钥导入轻钱包使用，用完后再换成新密钥</li>
 <li>纯冷模式也可实现，但当前 cli_wallet 支持不好，有需要的请单独联系</li>
 </ul>
 </li>
-<li>
-<p>相关资料</p>
-</li>
-<li>
-<p>图文教程 http://jc.btsabc.org/</p>
-</li>
+</ul>
+<h2 id="12_1">12. 相关资料<a class="headerlink" href="#12_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>图文教程 http://jc.btsabc.org/</li>
 <li>自建节点教程 http://btsabc.org/article-477-1.html</li>
 <li>获取账户私钥 http://btsabc.org/article-761-1.html</li>
 <li>英文对接文档 http://docs.bitshares.org/integration/exchanges/step-by-step.html</li>
 <li>英文 API 文档 http://docs.bitshares.org/api/index.html</li>
-</ol>
+</ul>
 <p>此文同步首发于 
-<em> https://steemit.com/bitshares/@abit/bitshares
-</em> https://bitsharestalk.org/index.php/topic,24346.0.html</p>
-<p>修改记录：
-2017-06-09 修正 delayed_node 初次启动参数问题（章节 5.3 ）
+- https://steemit.com/bitshares/@abit/bitshares
+- https://bitsharestalk.org/index.php/topic,24346.0.html</p>
+<h2 id="_1">修改记录：<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<pre><code>2017-06-09 修正 delayed_node 初次启动参数问题（章节 5.3 ）
 2017-06-10 修正 delayed_node 再次启动参数问题（章节 5.3 ）
 2017-06-10 增加块链结构说明（章节 1.4 ）；处理充值时推荐记录交易 ID （章节 9 ）；处理提现时推荐同时记录操作ID、块号等（章节 10.4 ）
 2017-06-11 增加处理充值时建议记录交易签名，取交易 ID 和签名的注意事项（章节 9 ）
@@ -586,7 +721,8 @@ rec &amp;&amp; rec-&gt;name == account_name_or_id:
 2017-11-14 新增一个减少运行内存的配置方法（修改章节 5.1，也影响 5.3）
 2017-11-17 新增提现目的账号名检查（章节 10.3 ）
 2017-11-17 增加轻钱包 171102 导致的一些改动 （影响章节 1.2, 5.1 ）
-2017-11-20 文档重命名为双节点版</p>
+2017-11-20 文档重命名为双节点版
+</code></pre>
               
             </div>
           </div>
